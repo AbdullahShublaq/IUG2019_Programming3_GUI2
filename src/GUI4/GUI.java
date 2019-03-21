@@ -96,20 +96,20 @@ public class GUI extends JFrame implements ActionListener {
 
         switch (command) {
             case "Open":
-                System.out.println("open");
-                JFileChooser chooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                        ".txt", "txt");
-                chooser.setFileFilter(filter);
+                try {
+                    System.out.println("open");
+                    JFileChooser chooser = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                            ".txt", "txt");
+                    chooser.setFileFilter(filter);
 
-                int returnVal = chooser.showOpenDialog(GUI.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("You chose to open this file: "
-                            + chooser.getSelectedFile().getName());
-                }
-                File selectedFile = chooser.getSelectedFile();
-                 {
-                    try {
+                    int returnVal = chooser.showOpenDialog(GUI.this);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        System.out.println("You chose to open this file: "
+                                + chooser.getSelectedFile().getName());
+                    }
+                    File selectedFile = chooser.getSelectedFile();
+                    if (selectedFile != null) {
                         Scanner in = new Scanner(selectedFile);
                         String s;
                         area.setText("");
@@ -117,10 +117,11 @@ public class GUI extends JFrame implements ActionListener {
                             area.append(in.nextLine() + "\n");
                         }
                         area.setEditable(true);
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
                 break;
 
             case "Close":
