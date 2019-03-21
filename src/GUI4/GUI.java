@@ -93,7 +93,6 @@ public class GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         String command = e.getActionCommand();
-
         switch (command) {
             case "Open":
                 try {
