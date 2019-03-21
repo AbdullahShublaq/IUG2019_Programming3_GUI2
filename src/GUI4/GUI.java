@@ -121,7 +121,6 @@ public class GUI extends JFrame implements ActionListener {
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 break;
 
             case "Close":
