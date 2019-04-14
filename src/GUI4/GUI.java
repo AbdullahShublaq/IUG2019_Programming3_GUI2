@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,8 +38,9 @@ public class GUI extends JFrame implements ActionListener {
 
     JMenuBar menuBar;
     JMenu File, Edit;
-    JMenuItem open, close, exit, font, color;
+    JMenuItem open, close, exit, font, color, save;
     JTextArea area;
+    File file;
 
     public GUI() {
         menuBar = new JMenuBar();
@@ -47,6 +51,9 @@ public class GUI extends JFrame implements ActionListener {
         open = new JMenuItem("Open");
         open.setMnemonic('O');
         open.addActionListener(this);
+        save = new JMenuItem("Save");
+        save.setMnemonic('S');
+        save.addActionListener(this);
         close = new JMenuItem("Close");
         close.setMnemonic('C');
         close.addActionListener(this);
@@ -54,6 +61,7 @@ public class GUI extends JFrame implements ActionListener {
         exit.setMnemonic('E');
         exit.addActionListener(this);
         File.add(open);
+        File.add(save);
         File.add(close);
         File.addSeparator();
         File.add(exit);
@@ -107,9 +115,9 @@ public class GUI extends JFrame implements ActionListener {
                         System.out.println("You chose to open this file: "
                                 + chooser.getSelectedFile().getName());
                     }
-                    File selectedFile = chooser.getSelectedFile();
-                    if (selectedFile != null) {
-                        Scanner in = new Scanner(selectedFile);
+                    file = chooser.getSelectedFile();
+                    if (file != null) {
+                        Scanner in = new Scanner(file);
                         String s;
                         area.setText("");
                         while (in.hasNextLine()) {
@@ -121,7 +129,24 @@ public class GUI extends JFrame implements ActionListener {
                     Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
+            case "Save":
+                System.out.println("Save");
+                 {
+                    try {
+                        FileOutputStream fos = new FileOutputStream(file);
+                        OutputStreamWriter osw = new OutputStreamWriter(fos);
+                        PrintWriter pw = new PrintWriter(osw);
+                        pw.println(area.getText());
+                        pw.flush();
+                        fos.close();
+                        osw.close();
+                        pw.close();
+                    } catch (Exception ex) {
+                        System.out.println(ex.getStackTrace());
+                    }
+                }
 
+                break;
             case "Close":
                 System.out.println("close");
                 area.setText("DEFAULT TEXT...");
