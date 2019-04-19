@@ -137,7 +137,9 @@ public class GUI extends JFrame implements ActionListener {
                         OutputStreamWriter osw = new OutputStreamWriter(fos);
                         PrintWriter pw = new PrintWriter(osw);
                         pw.println(area.getText());
+                        
                         pw.flush();
+                        
                         fos.close();
                         osw.close();
                         pw.close();
